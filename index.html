@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StreamVault</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+    
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --dark-gradient: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.8);
+      --accent-color: #ff6b6b;
+      --success-color: #4ecdc4;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--dark-gradient);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(78, 205, 196, 0.2) 0%, transparent 50%);
+      z-index: -1;
+      animation: backgroundShift 20s ease-in-out infinite;
+    }
+
+    @keyframes backgroundShift {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(12, 12, 12, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: all 0.3s ease;
+    }
+
+    .navbar:hover {
+      background: rgba(12, 12, 12, 0.9);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-gradient);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .search-bar {
+      padding: 0.7rem 1rem;
+      border-radius: 50px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      color: var(--text-primary);
+      width: 300px;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .search-bar::placeholder {
+      color: var(--text-secondary);
+    }
+
+    .search-bar:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+      transform: scale(1.02);
+    }
+
+    .banner {
+      height: 70vh;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      position: relative;
+      margin-bottom: 3rem;
+    }
+
+    .banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.8) 100%);
+    }
+
+    .banner-content {
+      position: relative;
+      z-index: 2;
+      max-width: 600px;
+    }
+
+    .banner h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+
+    .banner-description {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .banner-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      border: none;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: var(--primary-gradient);
+      color: white;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    }
+
+    .btn-secondary {
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      color: var(--text-primary);
+      border: 1px solid var(--glass-border);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .section {
+      margin: 4rem 2rem;
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .content-row {
+      display: flex;
+      overflow-x: auto;
+      gap: 1.5rem;
+      padding: 1rem 0;
+      scroll-behavior: smooth;
+    }
+
+    .content-row::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .content-row::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+    }
+
+    .content-row::-webkit-scrollbar-thumb {
+      background: var(--primary-gradient);
+      border-radius: 10px;
+    }
+
+    .content-card {
+      min-width: 200px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .content-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 15px;
+      transition: all 0.4s ease;
+    }
+
+    .content-card:hover {
+      transform: scale(1.05) translateY(-10px);
+    }
+
+    .content-card:hover img {
+      filter: brightness(1.2) saturate(1.2);
+    }
+
+    .content-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(transparent 60%, rgba(0,0,0,0.8) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 15px;
+    }
+
+    .content-card:hover::after {
+      opacity: 1;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(20px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 900px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      animation: slideUp 0.4s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .modal-poster {
+      width: 200px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-info {
+      flex: 1;
+    }
+
+    .modal-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .modal-rating {
+      font-size: 1.5rem;
+      color: #ffd700;
+      margin-bottom: 1rem;
+    }
+
+    .modal-description {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .server-selector {
+      margin-bottom: 2rem;
+    }
+
+    .server-selector label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .server-selector select {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 10px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 1rem;
+    }
+
+    .modal-video {
+      width: 100%;
+      height: 400px;
+      border-radius: 15px;
+      border: none;
+    }
+
+    .close {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 2rem;
+      color: var(--accent-color);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .close:hover {
+      transform: scale(1.2);
+      color: #ff5252;
+    }
+
+    .search-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(20px);
+      display: none;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 5rem;
+      z-index: 1500;
+    }
+
+    .search-modal-content {
+      width: 90%;
+      max-width: 800px;
+    }
+
+    .search-modal input {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border-radius: 50px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      color: var(--text-primary);
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      font-family: inherit;
+    }
+
+    .search-results {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1.5rem;
+      padding: 1rem 0;
+    }
+
+    .search-results img {
+      width: 100%;
+      height: 225px;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .search-results img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .footer {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid var(--glass-border);
+      padding: 3rem 2rem 2rem;
+      margin-top: 5rem;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-color);
+    }
+
+    /* Warning overlay styles */
+    .warning-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(20px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      color: #ff4444;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+      }
+
+      .search-bar {
+        width: 100%;
+      }
+
+      .banner {
+        height: 50vh;
+        padding: 0 1rem;
+      }
+
+      .banner h1 {
+        font-size: 2.5rem;
+      }
+
+      .modal-content {
+        padding: 1.5rem;
+        width: 95%;
+      }
+
+      .modal-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .modal-poster {
+        width: 150px;
+      }
+
+      .modal-title {
+        font-size: 2rem;
+      }
+
+      .content-card {
+        min-width: 150px;
+      }
+
+      .content-card img {
+        height: 225px;
+      }
+
+      .section {
+        margin: 2rem 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .banner h1 {
+        font-size: 2rem;
+      }
+
+      .modal-title {
+        font-size: 1.5rem;
+      }
+
+      .content-card {
+        min-width: 120px;
+      }
+
+      .content-card img {
+        height: 180px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Warning overlay for dev tools detection -->
+  <div class="warning-overlay" id="warning-overlay">
+    <div>
+      <i class="fas fa-exclamation-triangle"></i><br>
+      Developer Tools Detected!<br>
+      <small style="font-size: 1rem;">Please close developer tools to continue</small>
+    </div>
+  </div>
+
+  <nav class="navbar">
+    <a href="#" class="logo">StreamVault</a>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">Movies</a>
+      <a href="#">TV Shows</a>
+      <a href="#">Anime</a>
+      <input type="text" class="search-bar" placeholder="Search movies, shows, anime..." onfocus="openSearchModal()" />
+    </div>
+  </nav>
+
+  <div class="banner" id="banner">
+    <div class="banner-content">
+      <h1 id="banner-title">Loading...</h1>
+      <p class="banner-description" id="banner-description">Discover amazing movies and shows</p>
+      <div class="banner-buttons">
+        <button class="btn btn-primary" onclick="showBannerDetails()">
+          <i class="fas fa-play"></i> Watch Now
+        </button>
+        <button class="btn btn-secondary">
+          <i class="fas fa-info-circle"></i> More Info
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2><i class="fas fa-fire"></i> Trending Movies</h2>
+    <div class="content-row" id="movies-list"></div>
+  </div>
+
+  <div class="section">
+    <h2><i class="fas fa-tv"></i> Trending TV Shows</h2>
+    <div class="content-row" id="tvshows-list"></div>
+  </div>
+
+  <div class="section">
+    <h2><i class="fas fa-dragon"></i> Trending Anime</h2>
+    <div class="content-row" id="anime-list"></div>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div class="modal-header">
+        <img id="modal-image" src="" alt="" class="modal-poster" />
+        <div class="modal-info">
+          <h2 id="modal-title" class="modal-title"></h2>
+          <div class="modal-rating" id="modal-rating"></div>
+          <p id="modal-description" class="modal-description"></p>
+        </div>
+      </div>
+      
+      <div class="server-selector">
+        <label for="server"><i class="fas fa-server"></i> Select Server:</label>
+        <select id="server" onchange="changeServer()">
+          <option value="vidsrc.cc">Vidsrc.cc</option>
+          <option value="vidsrc.me">Vidsrc.me</option>
+          <option value="player.videasy.net">Player.Videasy.net</option>
+        </select>
+      </div>
+      <iframe id="modal-video" class="modal-video" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="search-modal" id="search-modal">
+    <div class="search-modal-content">
+      <span class="close" onclick="closeSearchModal()">&times;</span>
+      <input type="text" id="search-input" placeholder="Search for movies, shows, anime..." oninput="searchTMDB()" />
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 StreamVault. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+        <a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a>
+        <a href="#"><i class="fas fa-info-circle"></i> About Us</a>
+        <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Anti-debugging protection
+    (function() {
+      'use strict';
+      
+      // Disable right-click context menu
+      document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        return false;
+      });
+
+      // Disable common keyboard shortcuts for dev tools
+      document.addEventListener('keydown', function(e) {
+        // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+Shift+C
+        if (e.keyCode === 123 || 
+            (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) ||
+            (e.ctrlKey && e.keyCode === 85) ||
+            (e.ctrlKey && e.shiftKey && e.keyCode === 67)) {
+          e.preventDefault();
+          showWarning();
+          return false;
+        }
+      });
+
+      // DevTools detection using timing
+      let devtools = {open: false, orientation: null};
+      const threshold = 160;
+      
+      setInterval(function() {
+        if (window.outerHeight - window.innerHeight > threshold || 
+            window.outerWidth - window.innerWidth > threshold) {
+          if (!devtools.open) {
+            devtools.open = true;
+            showWarning();
+          }
+        } else {
+          if (devtools.open) {
+            devtools.open = false;
+            hideWarning();
+          }
+        }
+      }, 500);
+
+      // Console warning message
+      console.log('%cSTOP!', 'color: red; font-size: 50px; font-weight: bold;');
+      console.log('%cThis is a browser feature intended for developers. Unauthorized access to this console may violate the terms of service.', 'color: red; font-size: 16px;');
+
+      // Detect console usage
+      let consoleCheck = () => {
+        let start = new Date();
+        debugger;
+        let end = new Date();
+        if (end - start > 100) {
+          showWarning();
+        }
+      };
+
+      // Clear console periodically
+      setInterval(() => {
+        console.clear();
+        consoleCheck();
+      }, 2000);
+
+      // Disable text selection on important elements
+      document.addEventListener('selectstart', function(e) {
+        if (e.target.tagName === 'SCRIPT' || e.target.tagName === 'STYLE') {
+          e.preventDefault();
+          return false;
+        }
+      });
+
+      // Disable drag and drop
+      document.addEventListener('dragstart', function(e) {
+        e.preventDefault();
+        return false;
+      });
+
+      // Anti-debugging using performance timing
+      setInterval(function() {
+        const start = performance.now();
+        debugger;
+        const end = performance.now();
+        if (end - start > 100) {
+          showWarning();
+        }
+      }, 1000);
+
+      function showWarning() {
+        document.getElementById('warning-overlay').style.display = 'flex';
+        document.body.style.filter = 'blur(10px)';
+      }
+
+      function hideWarning() {
+        document.getElementById('warning-overlay').style.display = 'none';
+        document.body.style.filter = 'none';
+      }
+
+      // Obfuscate important functions
+      window[atob('c2hvd1dhcm5pbmc=')] = showWarning;
+      window[atob('aGlkZVdhcm5pbmc=')] = hideWarning;
+    })();
+
+    // Main application code (encoded/obfuscated sensitive parts)
+    const API_KEY = atob('NDU2MDM5ZWVhNTk2OTFlY2Y4ZGIzMzkyYWZjZWFiZTA=');
+    const BASE_URL = atob('aHR0cHM6Ly9hcGkudGhlbW92aWVkYi5vcmcvMw==');
+    const IMG_URL = atob('aHR0cHM6Ly9pbWFnZS50bWRiLm9yZy90L3Avb3JpZ2luYWw=');
+    let currentItem;
+    let bannerItem;
+
+    async function fetchTrending(type) {
+      try {
+        const res = await fetch(`${BASE_URL}/trending/${type}/week?api_key=${API_KEY}`);
+        const data = await res.json();
+        return data.results;
+      } catch (error) {
+        console.error('Error fetching trending content:', error);
+        return [];
+      }
+    }
+
+    async function fetchTrendingAnime() {
+      let allResults = [];
+      try {
+        for (let page = 1; page <= 3; page++) {
+          const res = await fetch(`${BASE_URL}/trending/tv/week?api_key=${API_KEY}&page=${page}`);
+          const data = await res.json();
+          const filtered = data.results.filter(item =>
+            item.original_language === 'ja' && item.genre_ids.includes(16)
+          );
+          allResults = allResults.concat(filtered);
+        }
+      } catch (error) {
+        console.error('Error fetching anime:', error);
+      }
+      return allResults;
+    }
+
+    function displayBanner(item) {
+      bannerItem = item;
+      const banner = document.getElementById('banner');
+      const title = document.getElementById('banner-title');
+      const description = document.getElementById('banner-description');
+      
+      banner.style.backgroundImage = `url(${IMG_URL}${item.backdrop_path})`;
+      title.textContent = item.title || item.name;
+      description.textContent = item.overview || 'Discover amazing content on StreamVault';
+    }
+
+    function showBannerDetails() {
+      if (bannerItem) {
+        showDetails(bannerItem);
+      }
+    }
+
+    function displayList(items, containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'content-card';
+        
+        const img = document.createElement('img');
+        img.src = `${IMG_URL}${item.poster_path}`;
+        img.alt = item.title || item.name;
+        img.onerror = function() {
+          this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
+        };
+        
+        card.appendChild(img);
+        card.onclick = () => showDetails(item);
+        container.appendChild(card);
+      });
+    }
+
+    function showDetails(item) {
+      currentItem = item;
+      document.getElementById('modal-title').textContent = item.title || item.name;
+      document.getElementById('modal-description').textContent = item.overview || 'No description available.';
+      document.getElementById('modal-image').src = `${IMG_URL}${item.poster_path}`;
+      
+      const rating = Math.round(item.vote_average / 2);
+      document.getElementById('modal-rating').innerHTML = '★'.repeat(rating) + '☆'.repeat(5 - rating) + ` (${item.vote_average}/10)`;
+      
+      changeServer();
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    function changeServer() {
+      const server = document.getElementById('server').value;
+      const type = currentItem.media_type === "movie" || currentItem.title ? "movie" : "tv";
+      let embedURL = "";
+
+      if (server === "vidsrc.cc") {
+        embedURL = `${atob('aHR0cHM6Ly92aWRzcmMuY2MvdjIvZW1iZWQ=')}/${type}/${currentItem.id}`;
+      } else if (server === "vidsrc.me") {
+        embedURL = `${atob('aHR0cHM6Ly92aWRzcmMubmV0L2VtYmVk')}/${type}/?tmdb=${currentItem.id}`;
+      } else if (server === "player.videasy.net") {
+        embedURL = `${atob('aHR0cHM6Ly9wbGF5ZXIudmlkZWFzeS5uZXQ=')}/${type}/${currentItem.id}`;
+      }
+
+      document.getElementById('modal-video').src = embedURL;
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+      document.getElementById('modal-video').src = '';
+    }
+
+    function openSearchModal() {
+      document.getElementById('search-modal').style.display = 'flex';
+      document.getElementById('search-input').focus();
+    }
+
+    function closeSearchModal() {
+      document.getElementById('search-modal').style.display = 'none';
+      document.getElementById('search-results').innerHTML = '';
+      document.getElementById('search-input').value = '';
+    }
+
+    async function searchTMDB() {
+      const query = document.getElementById('search-input').value;
+      if (!query.trim()) {
+        document.getElementById('search-results').innerHTML = '';
+        return;
+      }
+
+      try {
+        const res = await fetch(`${BASE_URL}/search/multi?api_key=${API_KEY}&query=${query}`);
+        const data = await res.json();
+
+        const container = document.getElementById('search-results');
+        container.innerHTML = '';
+        
+        data.results.forEach(item => {
+          if (!item.poster_path) return;
+          
+          const img = document.createElement('img');
+          img.src = `${IMG_URL}${item.poster_path}`;
+          img.alt = item.title || item.name;
+          img.onclick = () => {
+            closeSearchModal();
+            showDetails(item);
+          };
+          container.appendChild(img);
+        });
+      } catch (error) {
+        console.error('Error searching:', error);
+      }
+    }
+
+    // Close modals when clicking outside
+    document.getElementById('modal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+
+    document.getElementById('search-modal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeSearchModal();
+      }
+    });
+
+    // Keyboard shortcuts (excluding protected ones)
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+        closeSearchModal();
+      }
+      if (e.key === '/' && !e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        openSearchModal();
+      }
+    });
+
+    async function init() {
+      try {
+        const [movies, tvShows, anime] = await Promise.all([
+          fetchTrending('movie'),
+          fetchTrending('tv'),
+          fetchTrendingAnime()
+        ]);
+
+        if (movies.length > 0) {
+          displayBanner(movies[Math.floor(Math.random() * Math.min(movies.length, 5))]);
+          displayList(movies, 'movies-list');
+        }
+        
+        if (tvShows.length > 0) {
+          displayList(tvShows, 'tvshows-list');
+        }
+        
+        if (anime.length > 0) {
+          displayList(anime, 'anime-list');
+        }
+      } catch (error) {
+        console.error('Error initializing app:', error);
+        document.getElementById('banner-title').textContent = 'Welcome to StreamVault';
+      }
+    }
+
+    // Initialize the app
+    init();
+  </script>
+</body>
+</html>

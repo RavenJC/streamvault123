@@ -913,6 +913,10 @@
         embedURL = `${atob('aHR0cHM6Ly92aWRzcmMubmV0L2VtYmVk')}/${type}/?tmdb=${currentItem.id}`;
       } else if (server === "player.videasy.net") {
         embedURL = `${atob('aHR0cHM6Ly9wbGF5ZXIudmlkZWFzeS5uZXQ=')}/${type}/${currentItem.id}`;
+      } else if(server === "111movies.com") {
+        embedURL = `${atob('aHR0cHM6Ly9wbGF5ZXIudmlkZWFzeS5uZXQ=')}/${type}/${currentItem.id}`;
+      }else if(server === "moviesapi.to") {
+        embedURL = `${atob('aHR0cHM6Ly9wbGF5ZXIudmlkZWFzeS5uZXQ=')}/${type}/${currentItem.id}`;
       }
 
       document.getElementById('modal-video').src = embedURL;

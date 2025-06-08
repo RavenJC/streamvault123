@@ -5,11 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>StreamVault</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<script type="text/javascript" data-cfasync="false">
-/*<![CDATA[/* */
-(function(){var y=window,l="b0dcbf2a6a273bf7c7343ad3cf020346",m=[["siteId",193+203+995*416+4791574],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],o=["d3d3LmludGVsbGlnZW5jZWFkeC5jb20vbS9waGFuZGxlYmFycy5taW4uanM=","ZDJrbHg4N2Jnem5nY2UuY2xvdWRmcm9udC5uZXQvR3dSY3QvbEsvdXBhdGgubWluLmNzcw=="],b=-1,s,c,w=function(){clearTimeout(c);b++;if(o[b]&&!(1775029829000<(new Date).getTime()&&1<b)){s=y.document.createElement("script");s.type="text/javascript";s.async=!0;var d=y.document.getElementsByTagName("script")[0];s.src="https://"+atob(o[b]);s.crossOrigin="anonymous";s.onerror=w;s.onload=function(){clearTimeout(c);y[l.slice(0,16)+l.slice(0,16)]||w()};c=setTimeout(w,5E3);d.parentNode.insertBefore(s,d)}};if(!y[l]){try{Object.freeze(y[l]=m)}catch(e){}w()}})();
-/*]]>/* */
-</script>
+  <script type="text/javascript" data-cfasync="false"> /*<![CDATA[/* */ (function(){var y=window,l="b0dcbf2a6a273bf7c7343ad3cf020346",m=[["siteId",193+203+995*416+4791574],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],o=["d3d3LmludGVsbGlnZW5jZWFkeC5jb20vbS9waGFuZGxlYmFycy5taW4uanM=","ZDJrbHg4N2Jnem5nY2UuY2xvdWRmcm9udC5uZXQvR3dSY3QvbEsvdXBhdGgubWluLmNzcw=="],b=-1,s,c,w=function(){clearTimeout(c);b++;if(o[b]&&!(1775029829000<(new Date).getTime()&&1<b)){s=y.document.createElement("script");s.type="text/javascript";s.async=!0;var d=y.document.getElementsByTagName("script")[0];s.src="https://"+atob(o[b]);s.crossOrigin="anonymous";s.onerror=w;s.onload=function(){clearTimeout(c);y[l.slice(0,16)+l.slice(0,16)]||w()};c=setTimeout(w,5E3);d.parentNode.insertBefore(s,d)}};if(!y[l]){try{Object.freeze(y[l]=m)}catch(e){}w()}})(); /*]]>/* */ </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
     
@@ -142,6 +138,94 @@
       border-color: var(--accent-color);
       box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
       transform: scale(1.02);
+    }
+
+    /* Category Filter Styles */
+    .category-filter {
+      padding: 2rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      margin-bottom: 2rem;
+    }
+
+    .category-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .category-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .category-btn {
+      padding: 0.6rem 1.5rem;
+      border-radius: 25px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: inherit;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .category-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--text-primary);
+      transform: translateY(-2px);
+    }
+
+    .category-btn.active {
+      background: var(--primary-gradient);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .genre-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      justify-content: center;
+    }
+
+    .genre-btn {
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .genre-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+    }
+
+    .genre-btn.active {
+      background: var(--secondary-gradient);
+      color: white;
+      border-color: transparent;
     }
 
     .banner {
@@ -401,8 +485,7 @@
 
     .server-selector select {
       width: 100%;
-      padding: 0.8rem;
-      border-radius: 10px;
+      padding: 0.8rem;      border-radius: 10px;
       border: 1px solid var(--glass-border);
       background: var(--glass-bg);
       backdrop-filter: blur(10px);
@@ -471,8 +554,8 @@
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 1.5rem;
       padding: 1rem 0;
-      max-height: 400px; /* Set a maximum height */
-      overflow-y: auto; /* Enable vertical scrolling */
+      max-height: 400px;
+      overflow-y: auto;
     }
 
     .search-results img {
@@ -542,6 +625,28 @@
       font-weight: bold;
     }
 
+    /* Loading spinner */
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-left: 4px solid var(--accent-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
     /* Mobile Responsive */
     @media (max-width: 768px) {
       .navbar {
@@ -558,6 +663,28 @@
 
       .search-bar {
         width: 100%;
+      }
+
+      .category-filter {
+        padding: 1rem;
+      }
+
+      .category-buttons {
+        gap: 0.5rem;
+      }
+
+      .category-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .genre-filter {
+        gap: 0.5rem;
+      }
+
+      .genre-btn {
+        padding: 0.3rem 0.8rem;
+        font-size: 0.8rem;
       }
 
       .banner {
@@ -634,13 +761,52 @@
   <nav class="navbar">
     <a href="#" class="logo">StreamVault</a>
     <div class="nav-links">
-      <a href="#">Home</a>
-      <a href="#">Movies</a>
-      <a href="#">TV Shows</a>
-      <a href="#">Anime</a>
+      <a href="#" onclick="showAllContent()">Home</a>
+      <a href="#" onclick="filterByType('movie')">Movies</a>
+      <a href="#" onclick="filterByType('tv')">TV Shows</a>
+      <a href="#" onclick="filterByType('anime')">Anime</a>
       <input type="text" class="search-bar" placeholder="Search movies, shows, anime..." onfocus="openSearchModal()" />
     </div>
   </nav>
+
+  <!-- Category Filter Section -->
+  <div class="category-filter">
+    <h3 class="category-title"><i class="fas fa-filter"></i> Browse by Category</h3>
+    
+    <div class="category-buttons">
+      <button class="category-btn active" onclick="showAllContent()">
+        <i class="fas fa-home"></i> All Content
+      </button>
+      <button class="category-btn" onclick="filterByType('movie')">
+        <i class="fas fa-film"></i> Movies
+      </button>
+      <button class="category-btn" onclick="filterByType('tv')">
+        <i class="fas fa-tv"></i> TV Shows
+      </button>
+      <button class="category-btn" onclick="filterByType('anime')">
+        <i class="fas fa-dragon"></i> Anime
+      </button>
+    </div>
+
+    <div class="genre-filter">
+      <button class="genre-btn active" onclick="filterByGenre('all')">All Genres</button>
+      <button class="genre-btn" onclick="filterByGenre(28)">Action</button>
+      <button class="genre-btn" onclick="filterByGenre(12)">Adventure</button>
+      <button class="genre-btn" onclick="filterByGenre(16)">Animation</button>
+      <button class="genre-btn" onclick="filterByGenre(35)">Comedy</button>
+      <button class="genre-btn" onclick="filterByGenre(80)">Crime</button>
+      <button class="genre-btn" onclick="filterByGenre(99)">Documentary</button>
+      <button class="genre-btn" onclick="filterByGenre(18)">Drama</button>
+      <button class="genre-btn" onclick="filterByGenre(10751)">Family</button>
+      <button class="genre-btn" onclick="filterByGenre(14)">Fantasy</button>
+      <button class="genre-btn" onclick="filterByGenre(27)">Horror</button>
+      <button class="genre-btn" onclick="filterByGenre(9648)">Mystery</button>
+      <button class="genre-btn" onclick="filterByGenre(10749)">Romance</button>
+      <button class="genre-btn" onclick="filterByGenre(878)">Sci-Fi</button>
+      <button class="genre-btn" onclick="filterByGenre(53)">Thriller</button>
+      <button class="genre-btn" onclick="filterByGenre(10752)">War</button>
+    </div>
+  </div>
 
   <div class="banner" id="banner">
     <div class="banner-content">
@@ -657,17 +823,17 @@
     </div>
   </div>
 
-  <div class="section">
+  <div class="section" id="movies-section">
     <h2><i class="fas fa-fire"></i> Trending Movies</h2>
     <div class="content-row" id="movies-list"></div>
   </div>
 
-  <div class="section">
+  <div class="section" id="tvshows-section">
     <h2><i class="fas fa-tv"></i> Trending TV Shows</h2>
     <div class="content-row" id="tvshows-list"></div>
   </div>
 
-  <div class="section">
+  <div class="section" id="anime-section">
     <h2><i class="fas fa-dragon"></i> Trending Anime</h2>
     <div class="content-row" id="anime-list"></div>
   </div>
@@ -691,7 +857,7 @@
           <option value="vidsrc.me">Vidsrc.me</option>
           <option value="player.videasy.net">Player.Videasy.net</option>
           <option value="111movies.com">111movies.com</option>
-          <option value="moviesapi.to">Moviesapi.to</option>
+          <option value="moviesapi.to">moviesapi.to</option>
         </select>
       </div>
       <iframe id="modal-video" class="modal-video" allowfullscreen></iframe>
@@ -763,9 +929,7 @@
 
       // Console warning message
       console.log('%cSTOP!', 'color: red; font-size: 50px; font-weight: bold;');
-      console.log('%cThis is a browser feature intended for developers. Unauthorized access to this console may violate the terms of service.', 'color: red; font-size: 16px;');
-
-      // Detect console usage
+      console.log('%cThis is a browser feature intended for developers. Unauthorized access to this console may violate the terms of service.', 'color: red; font-size: 16px;');      // Detect console usage
       let consoleCheck = () => {
         let start = new Date();
         debugger;
@@ -824,8 +988,14 @@
     const API_KEY = atob('NDU2MDM5ZWVhNTk2OTFlY2Y4ZGIzMzkyYWZjZWFiZTA=');
     const BASE_URL = atob('aHR0cHM6Ly9hcGkudGhlbW92aWVkYi5vcmcvMw==');
     const IMG_URL = atob('aHR0cHM6Ly9pbWFnZS50bWRiLm9yZy90L3Avb3JpZ2luYWw=');
+    
     let currentItem;
     let bannerItem;
+    let allMovies = [];
+    let allTVShows = [];
+    let allAnime = [];
+    let currentFilter = 'all';
+    let currentGenre = 'all';
 
     async function fetchTrending(type) {
       try {
@@ -855,6 +1025,18 @@
       return allResults;
     }
 
+    async function fetchByGenre(type, genreId) {
+      try {
+        const endpoint = type === 'movie' ? 'movie' : 'tv';
+        const res = await fetch(`${BASE_URL}/discover/${endpoint}?api_key=${API_KEY}&with_genres=${genreId}&sort_by=popularity.desc`);
+        const data = await res.json();
+        return data.results;
+      } catch (error) {
+        console.error('Error fetching by genre:', error);
+        return [];
+      }
+    }
+
     function displayBanner(item) {
       bannerItem = item;
       const banner = document.getElementById('banner');
@@ -875,6 +1057,11 @@
     function displayList(items, containerId) {
       const container = document.getElementById(containerId);
       container.innerHTML = '';
+      
+      if (items.length === 0) {
+        container.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+        return;
+      }
       
       items.forEach(item => {
         const card = document.createElement('div');
@@ -973,7 +1160,138 @@
       }
     }
 
+    // Category and Genre Filter Functions
+    function setActiveButton(buttons, activeButton) {
+      buttons.forEach(btn => btn.classList.remove('active'));
+      activeButton.classList.add('active');
+    }
+
+    function showAllContent() {
+      currentFilter = 'all';
+      currentGenre = 'all';
+      
+      // Update category buttons
+      const categoryBtns = document.querySelectorAll('.category-btn');
+      setActiveButton(categoryBtns, categoryBtns[0]);
+      
+      // Update genre buttons
+      const genreBtns = document.querySelectorAll('.genre-btn');
+      setActiveButton(genreBtns, genreBtns[0]);
+      
+      // Show all sections
+      document.getElementById('movies-section').style.display = 'block';
+      document.getElementById('tvshows-section').style.display = 'block';
+      document.getElementById('anime-section').style.display = 'block';
+      
+      // Display original content
+      displayList(allMovies, 'movies-list');
+      displayList(allTVShows, 'tvshows-list');
+      displayList(allAnime, 'anime-list');
+    }
+
+    async function filterByType(type) {
+      currentFilter = type;
+      currentGenre = 'all';
+      
+      // Update category buttons
+      const categoryBtns = document.querySelectorAll('.category-btn');
+      const activeBtn = Array.from(categoryBtns).find(btn => 
+        btn.textContent.toLowerCase().includes(type === 'tv' ? 'tv shows' : type)
+      );
+      if (activeBtn) setActiveButton(categoryBtns, activeBtn);
+      
+      // Reset genre filter
+      const genreBtns = document.querySelectorAll('.genre-btn');
+      setActiveButton(genreBtns, genreBtns[0]);
+      
+      // Hide all sections first
+      document.getElementById('movies-section').style.display = 'none';
+      document.getElementById('tvshows-section').style.display = 'none';
+      document.getElementById('anime-section').style.display = 'none';
+      
+      // Show relevant section
+      if (type === 'movie') {
+        document.getElementById('movies-section').style.display = 'block';
+        displayList(allMovies, 'movies-list');
+      } else if (type === 'tv') {
+        document.getElementById('tvshows-section').style.display = 'block';
+        displayList(allTVShows, 'tvshows-list');
+      } else if (type === 'anime') {
+        document.getElementById('anime-section').style.display = 'block';
+        displayList(allAnime, 'anime-list');
+      }
+    }
+
+    async function filterByGenre(genreId) {
+      currentGenre = genreId;
+      
+      // Update genre buttons
+      const genreBtns = document.querySelectorAll('.genre-btn');
+      const activeBtn = event.target;
+      setActiveButton(genreBtns, activeBtn);
+      
+      if (genreId === 'all') {
+        if (currentFilter === 'all') {
+          showAllContent();
+        } else {
+          filterByType(currentFilter);
+        }
+        return;
+      }
+      
+      // Show loading
+      if (currentFilter === 'all' || currentFilter === 'movie') {
+        document.getElementById('movies-list').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+      }
+      if (currentFilter === 'all' || currentFilter === 'tv') {
+        document.getElementById('tvshows-list').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+      }
+      if (currentFilter === 'all' || currentFilter === 'anime') {
+        document.getElementById('anime-list').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+      }
+      
+      try {
+        if (currentFilter === 'all') {
+          // Fetch all types for this genre
+          const [movies, tvShows] = await Promise.all([
+            fetchByGenre('movie', genreId),
+            fetchByGenre('tv', genreId)
+          ]);
+          
+          // Filter anime from TV shows if genre is animation
+          let anime = [];
+          if (genreId === 16) {
+            anime = tvShows.filter(item => 
+              item.original_language === 'ja' && item.genre_ids.includes(16)
+            );
+          }
+          
+          displayList(movies, 'movies-list');
+          displayList(tvShows, 'tvshows-list');
+          displayList(anime, 'anime-list');
+          
+        } else if (currentFilter === 'movie') {
+          const movies = await fetchByGenre('movie', genreId);
+          displayList(movies, 'movies-list');
+          
+        } else if (currentFilter === 'tv') {
+          const tvShows = await fetchByGenre('tv', genreId);
+          displayList(tvShows, 'tvshows-list');
+          
+        } else if (currentFilter === 'anime') {
+          const tvShows = await fetchByGenre('tv', genreId);
+          const anime = tvShows.filter(item => 
+            item.original_language === 'ja' && item.genre_ids.includes(16)
+          );
+          displayList(anime, 'anime-list');
+        }
+      } catch (error) {
+        console.error('Error filtering by genre:', error);
+      }
+    }
+
     // Close modals when clicking outside
+    document.getElementById('modal').addEventListener    // Close modals when clicking outside
     document.getElementById('modal').addEventListener('click', function(e) {
       if (e.target === this) {
         closeModal();
@@ -1005,6 +1323,11 @@
           fetchTrending('tv'),
           fetchTrendingAnime()
         ]);
+
+        // Store data globally for filtering
+        allMovies = movies;
+        allTVShows = tvShows;
+        allAnime = anime;
 
         if (movies.length > 0) {
           displayBanner(movies[Math.floor(Math.random() * Math.min(movies.length, 5))]);
